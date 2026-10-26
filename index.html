@@ -16,6 +16,28 @@
 <link rel="preload" href="assets/fonts/source-serif-4-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
 <script>document.documentElement.classList.add('js');</script>
+<style>
+/* Home page only: white body sections, text-only 2x2 feature grid */
+main{background:#fff;}
+.light{
+  --ink:#0b1424; --ink-dim:#3d4a60; --ink-faint:#5a667c;
+  --gold:#8a6514; --gold-bright:#8a6514;
+  --line:rgba(11,20,36,0.14); --bg-navy-2:#f5f6f9;
+  background:#fff; color:var(--ink);
+}
+.light a:hover{color:var(--bg-navy);}
+.light .btn-gold{background:#f0c876; border-color:#f0c876; color:#050810;}
+.light .btn-gold:hover{background:#0b1424; border-color:#0b1424; color:#fff;}
+.light .btn-ghost{color:#0b1424; border-color:#8a6514;}
+.light .btn-ghost:hover{background:rgba(138,101,20,0.10); color:#0b1424;}
+.light :focus-visible{outline-color:#8a6514;}
+.cta-band.light{border-top:1px solid var(--line); border-bottom:none;}
+.features-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(20px,3vw,32px);}
+.features-grid .feature{display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-top:3px solid #dcab52; border-radius:var(--radius); padding:clamp(24px,3vw,36px);}
+.features-grid .feature-body{display:flex; flex-direction:column; flex:1;}
+.features-grid .feature-body .actions{margin-top:auto; padding-top:26px;}
+@media (max-width:760px){ .features-grid{grid-template-columns:1fr;} }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -60,7 +82,7 @@
   <button type="button" class="video-toggle" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 2l11 6-11 6z"/></svg><span class="label">Play background video</span></button>
 </section>
 
-<section class="section" aria-labelledby="ways-title">
+<section class="section light" aria-labelledby="ways-title">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Ways to support</p>
@@ -68,10 +90,9 @@
       <p>Every gift to SAO supports the same mission from a different direction. Choose the path that fits you.</p>
     </div>
 
-    <div class="features">
+    <div class="features features-grid">
 
       <article class="feature" aria-labelledby="f-snac">
-        <div class="feature-media"><img src="assets/images/flwo-ridge.jpg" alt="The Fred Lawrence Whipple Observatory on the ridge of Mount Hopkins, Arizona" width="1800" height="1350" loading="lazy"></div>
         <div class="feature-body">
           <p class="eyebrow">Membership</p>
           <h2 id="f-snac">Join the Smithsonian National Astronomy Council</h2>
@@ -83,7 +104,6 @@
       </article>
 
       <article class="feature" aria-labelledby="f-lead">
-        <div class="feature-media"><img src="assets/images/gclef-instrument.jpg" alt="The G-CLEF spectrograph, built by SAO for the Giant Magellan Telescope, under assembly" width="1800" height="1350" loading="lazy"></div>
         <div class="feature-body">
           <p class="eyebrow">Leadership &amp; legacy</p>
           <h2 id="f-lead">Make a lasting impact</h2>
@@ -95,7 +115,6 @@
       </article>
 
       <article class="feature" aria-labelledby="f-give">
-        <div class="feature-media"><img src="assets/images/kepler.jpg" alt="Kepler's supernova remnant, a glowing blue shell of debris, imaged in X-ray by NASA's Chandra" width="864" height="864" loading="lazy"></div>
         <div class="feature-body">
           <p class="eyebrow">Donate</p>
           <h2 id="f-give">Give today</h2>
@@ -108,7 +127,6 @@
       </article>
 
       <article class="feature" aria-labelledby="f-corp">
-        <div class="feature-media"><img src="assets/images/central-engineering.jpg" alt="SAO engineers at work on scientific instrumentation in the Central Engineering lab" width="1800" height="1012" loading="lazy"></div>
         <div class="feature-body">
           <p class="eyebrow">Organizations</p>
           <h2 id="f-corp">Partner with us</h2>
@@ -123,33 +141,7 @@
   </div>
 </section>
 
-<section class="section alt" aria-labelledby="gmt-title">
-  <div class="wrap spotlight">
-    <div>
-      <video controls playsinline preload="none" poster="assets/images/why-gmt-poster.jpg" aria-describedby="gmt-desc" width="1440" height="810">
-        <source src="assets/video/why-gmt.mp4" type="video/mp4">
-        Your browser does not support embedded video. Read the description of this video below.
-      </video>
-      <details class="transcript">
-        <summary>Click for Video Description (no audio)</summary>
-        <div id="gmt-desc">
-          <p>A 55-second animation with no sound. The camera flies over a dry, rust-colored mountain range in Chile's Atacama Desert toward a single summit, where the cylindrical enclosure of the Giant Magellan Telescope stands beside a smaller support building. The view closes in as the enclosure's shutters open to reveal the telescope inside. Inside the dome, the camera faces the telescope's seven giant circular mirrors, arranged in a flower-like pattern within a steel framework. The mirrors then tilt toward a sunset sky that reflects pink and orange across their surfaces. The final scene is a time-lapse of the night sky: the Milky Way arcs over the observatory on its dark mountaintop.</p>
-        </div>
-      </details>
-    </div>
-    <div>
-      <p class="eyebrow">Spotlight</p>
-      <h2 id="gmt-title">Why the Giant Magellan Telescope</h2>
-      <p>SAO is building critical instrumentation for the Giant Magellan Telescope, including the G-CLEF spectrograph.</p>
-      <p>Philanthropy helps fund the design and construction of instruments like these, years before the first light reaches them.</p>
-      <div class="actions">
-        <a class="btn btn-ghost" href="giving-individual.html#leadership">Support instrumentation</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" aria-labelledby="impact-title">
+<section class="section light" aria-labelledby="impact-title">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Where it goes</p>
@@ -164,7 +156,7 @@
   </div>
 </section>
 
-<section class="cta-band" aria-labelledby="talk-title">
+<section class="cta-band light" aria-labelledby="talk-title">
   <div class="wrap">
     <div>
       <h2 id="talk-title">Not sure where to start?</h2>
@@ -223,7 +215,7 @@
       <p>&copy; 2026 Smithsonian Astrophysical Observatory</p>
       <p>Unofficial companion site — content sourced from sao.si.edu &amp; cfa.harvard.edu</p>
     </div>
-    <p class="credits">Image &amp; video credits: Giant Magellan Telescope renderings courtesy the GMTO Corporation. Kepler's Supernova Remnant — NASA/CXC. Fred Lawrence Whipple Observatory, G-CLEF and Central Engineering imagery — Center for Astrophysics | Harvard &amp; Smithsonian. Additional imagery courtesy NASA/Chandra X-ray Center.</p>
+    <p class="credits">Image &amp; video credits: Kepler's Supernova Remnant — NASA/CXC. Fred Lawrence Whipple Observatory, G-CLEF and Central Engineering imagery — Center for Astrophysics | Harvard &amp; Smithsonian. Additional imagery courtesy NASA/Chandra X-ray Center.</p>
   </div>
 </footer>
 
