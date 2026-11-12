@@ -337,6 +337,11 @@ details.drop .label{font-family:var(--mono); font-size:0.8rem; letter-spacing:0.
 details.drop .drop-title{font-family:var(--display); font-weight:700; font-size:1.1rem; color:var(--ink);}
 details.drop .drop-body{padding:0 24px 24px;}
 details.drop .drop-body .intro{color:var(--ink-dim);}
+dl.facts{display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%,230px),1fr)); gap:14px 28px; margin-top:16px; padding-top:16px; border-top:1px solid var(--line);}
+dl.facts dt{font-family:var(--mono); font-size:0.78rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint);}
+dl.facts dd{color:var(--ink-dim); font-size:0.97rem; line-height:1.55; margin-top:2px;}
+dl.facts .note{margin-top:2px; font-size:0.88rem;}
+dl.facts .wide{grid-column:1 / -1; padding-top:12px; border-top:1px solid var(--line);}
 /* Compact banners and hero: only as tall as their text */
 .banner .wrap{padding-top:clamp(36px,5vw,56px); padding-bottom:clamp(36px,5vw,56px);}
 .hero{min-height:0;}
