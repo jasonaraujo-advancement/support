@@ -60,4 +60,41 @@
     if(img.complete && img.naturalWidth === 0){ fallback(img); }
     else { img.addEventListener('error', function(){ fallback(img); }); }
   });
+
+  /* ---- How to Give: method tiles act as a dropdown for their instructions ---- */
+  var tabs = document.querySelectorAll('.method-tab');
+  var panels = document.querySelectorAll('.method-panels .method');
+  if(tabs.length && panels.length){
+    var isPanel = function(id){ return !!id && !!document.getElementById(id) && document.getElementById(id).closest('.method-panels'); };
+    var show = function(id, scroll){
+      panels.forEach(function(p){ p.hidden = (p.id !== id); });
+      tabs.forEach(function(t){ t.setAttribute('aria-expanded', t.getAttribute('href') === '#' + id ? 'true' : 'false'); });
+      var panel = document.getElementById(id);
+      if(panel && scroll && panel.getBoundingClientRect().top > window.innerHeight * 0.6){
+        panel.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'});
+      }
+    };
+    var hideAll = function(){
+      panels.forEach(function(p){ p.hidden = true; });
+      tabs.forEach(function(t){ t.setAttribute('aria-expanded', 'false'); });
+    };
+    hideAll();
+    document.addEventListener('click', function(e){
+      var link = e.target.closest && e.target.closest('a[href^="#"]');
+      if(!link) return;
+      var id = link.getAttribute('href').slice(1);
+      if(!isPanel(id)) return;
+      e.preventDefault();
+      if(link.classList.contains('method-tab') && link.getAttribute('aria-expanded') === 'true'){ hideAll(); return; }
+      show(id, true);
+      if(!link.classList.contains('method-tab')){ document.getElementById(id).scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'}); }
+      if(history.replaceState) history.replaceState(null, '', '#' + id);
+    });
+    var fromHash = function(){
+      var id = location.hash.slice(1);
+      if(isPanel(id)){ show(id, false); document.getElementById(id).scrollIntoView({block: 'start'}); }
+    };
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+  }
 })();
