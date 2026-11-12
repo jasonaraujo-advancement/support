@@ -313,6 +313,16 @@ main.light-main{background:#fff;}
 /* Half the original space between sections, on every page */
 .section{padding:clamp(28px,4vw,48px) 0;}
 .section.tight{padding-top:clamp(16px,2.5vw,28px);}
+/* How to Give: method tiles open their instructions as a dropdown (JS only; without JS everything shows) */
+.js .method-tab{position:relative; padding-right:48px; cursor:pointer;}
+.js .method-tab::after{content:""; position:absolute; right:22px; top:30px; width:9px; height:9px; border-right:2px solid #8a6514; border-bottom:2px solid #8a6514; transform:rotate(45deg); transition:transform .2s ease;}
+.js .method-tab[aria-expanded="true"]{background:#fff; border-color:#dcab52; box-shadow:inset 0 0 0 1px #dcab52;}
+.js .method-tab[aria-expanded="true"]::after{transform:rotate(-135deg); top:34px;}
+.method-panels{margin-top:clamp(40px,6vw,64px);}
+.js .method-panels{margin-top:24px;}
+.js .method-panels .method{margin:0; padding:clamp(24px,3vw,36px); border:1px solid var(--line); border-top:3px solid #dcab52; border-radius:var(--radius); background:#fff; animation:panelIn .25s ease;}
+.method[hidden]{display:none;}
+@keyframes panelIn{from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:none;}}
 /* Compact banners and hero: only as tall as their text */
 .banner .wrap{padding-top:clamp(36px,5vw,56px); padding-bottom:clamp(36px,5vw,56px);}
 .hero{min-height:0;}
