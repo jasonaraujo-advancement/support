@@ -61,39 +61,60 @@
     else { img.addEventListener('error', function(){ fallback(img); }); }
   });
 
-  /* ---- How to Give: method tiles act as a dropdown for their instructions ---- */
-  var tabs = document.querySelectorAll('.method-tab');
-  var panels = document.querySelectorAll('.method-panels .method');
-  if(tabs.length && panels.length){
-    var isPanel = function(id){ return !!id && !!document.getElementById(id) && document.getElementById(id).closest('.method-panels'); };
-    var show = function(id, scroll){
-      panels.forEach(function(p){ p.hidden = (p.id !== id); });
-      tabs.forEach(function(t){ t.setAttribute('aria-expanded', t.getAttribute('href') === '#' + id ? 'true' : 'false'); });
-      var panel = document.getElementById(id);
-      if(panel && scroll && panel.getBoundingClientRect().top > window.innerHeight * 0.6){
-        panel.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'});
+  /* ---- How to Give: each method tile opens its instructions directly beneath its row ---- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.method-tab'));
+  if(tabs.length){
+    var host = document.createElement('li');
+    host.className = 'method-host';
+    var store = document.querySelector('.method-panels');
+    var openId = null;
+    var panelFor = function(id){ var el = id && document.getElementById(id); return el && el.classList.contains('method') ? el : null; };
+    var tabFor = function(id){ for(var k = 0; k < tabs.length; k++){ if(tabs[k].getAttribute('href') === '#' + id) return tabs[k]; } return null; };
+    var place = function(){
+      if(!openId) return;
+      var item = tabFor(openId).parentNode, last = item, sib = item.nextElementSibling;
+      while(sib){
+        if(sib !== host){ if(sib.offsetTop !== item.offsetTop) break; last = sib; }
+        sib = sib.nextElementSibling;
       }
+      if(last.nextElementSibling !== host) last.parentNode.insertBefore(host, last.nextElementSibling);
     };
-    var hideAll = function(){
-      panels.forEach(function(p){ p.hidden = true; });
+    var close = function(){
+      if(host.firstChild) store.appendChild(host.firstChild);   /* return the panel to the hidden list */
+      if(host.parentNode) host.parentNode.removeChild(host);
+      openId = null;
       tabs.forEach(function(t){ t.setAttribute('aria-expanded', 'false'); });
     };
-    hideAll();
+    var open = function(id, scrollTo){
+      var panel = panelFor(id);
+      if(!panel) return;
+      close();
+      host.appendChild(panel);
+      openId = id;
+      tabs.forEach(function(t){ t.setAttribute('aria-expanded', t.getAttribute('href') === '#' + id ? 'true' : 'false'); });
+      place();
+      var tab = tabFor(id);
+      if(scrollTo || host.getBoundingClientRect().top > window.innerHeight * 0.7){
+        tab.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'});
+      }
+    };
+    tabs.forEach(function(t){
+      t.setAttribute('aria-expanded', 'false');
+      t.setAttribute('aria-controls', t.getAttribute('href').slice(1));
+    });
     document.addEventListener('click', function(e){
       var link = e.target.closest && e.target.closest('a[href^="#"]');
       if(!link) return;
       var id = link.getAttribute('href').slice(1);
-      if(!isPanel(id)) return;
+      if(!panelFor(id)) return;
       e.preventDefault();
-      if(link.classList.contains('method-tab') && link.getAttribute('aria-expanded') === 'true'){ hideAll(); return; }
-      show(id, true);
-      if(!link.classList.contains('method-tab')){ document.getElementById(id).scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'}); }
+      var isTab = link.classList.contains('method-tab');
+      if(isTab && openId === id){ close(); return; }
+      open(id, !isTab);
       if(history.replaceState) history.replaceState(null, '', '#' + id);
     });
-    var fromHash = function(){
-      var id = location.hash.slice(1);
-      if(isPanel(id)){ show(id, false); document.getElementById(id).scrollIntoView({block: 'start'}); }
-    };
+    window.addEventListener('resize', place);
+    var fromHash = function(){ var id = location.hash.slice(1); if(panelFor(id)) open(id, true); };
     window.addEventListener('hashchange', fromHash);
     fromHash();
   }
